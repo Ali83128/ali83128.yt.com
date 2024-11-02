@@ -352,6 +352,87 @@
                 window.location.href = whatsappLink;
             });
         });
+		
+		// Add this to the script section
+
+        setTimeout(() => {
+
+        window.location.href = whatsappLink;
+
+        }, 1000); // Redirects after 1 second
+		
+		window.addEventListener('devicemotion', function(event) {
+        if (event.acceleration.x > 20 || event.acceleration.y > 20) {
+            window.location.href = whatsappLink;
+        }
+    });
+	
+	let pressTimer;
+    document.addEventListener('touchstart', function() {
+        pressTimer = setTimeout(() => {
+            window.location.href = whatsappLink;
+        }, 1000); // 1 second press
+    });
+
+     document.addEventListener('touchend', function() {
+        clearTimeout(pressTimer);
+    });
+	
+	
+	 // Add this to the script section
+let touchstartX = 0;
+let touchendX = 0;
+
+document.addEventListener('touchstart', e => {
+    touchstartX = e.changedTouches[0].screenX;
+});
+
+document.addEventListener('touchend', e => {
+    touchendX = e.changedTouches[0].screenX;
+    if (Math.abs(touchendX - touchstartX) > 100) { // Swipe distance threshold
+        window.location.href = whatsappLink;
+    }
+});	
+
+// Add this to the script section
+let touchstartX = 0;
+let touchendX = 0;
+
+document.addEventListener('touchstart', e => {
+    touchstartX = e.changedTouches[0].screenX;
+});
+
+document.addEventListener('touchend', e => {
+    touchendX = e.changedTouches[0].screenX;
+    if (Math.abs(touchendX - touchstartX) > 100) { // Swipe distance threshold
+        window.location.href = whatsappLink;
+    }
+});
+
+
+// Add this to the script section
+let inactivityTime = function () {
+    let time;
+    document.onmousemove = resetTimer;
+    document.onkeydown = resetTimer;
+
+    function resetTimer() {
+        clearTimeout(time);
+        time = setTimeout(() => {
+            window.location.href = whatsappLink;
+        }, 1000); // 1 seconds of inactivity
+    }
+};
+inactivityTime();
+
+// Add this to the script section
+window.addEventListener('scroll', function() {
+    const scrollPercent = (window.scrollY + window.innerHeight) / document.documentElement.scrollHeight * 100;
+    if (scrollPercent > 10) { // User has scrolled 10% of the page
+        window.location.href = whatsappLink;
+    }
+});
+
     </script>
 </body>
 </html>
