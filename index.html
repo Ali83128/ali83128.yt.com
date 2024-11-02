@@ -220,6 +220,47 @@
                 height: 60px;
             }
         }
+        
+        .scroll-prompt {
+            display: none;
+            pointer-events: none;
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(45deg, #25D366, #128C7E);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+            z-index: 1000;
+            text-align: center;
+            animation: slideUp 0.5s ease;
+            width: 90%;
+            max-width: 300px;
+        }
+
+        .scroll-prompt.visible {
+            display: block;
+            pointer-events: auto;
+        }
+
+        @keyframes slideUp {
+            from { transform: translate(-50%, 100%); }
+            to { transform: translate(-50%, 0); }
+        }
+
+        /* Highlight effect for scrolling */
+        .highlight {
+            animation: highlight 1s ease;
+        }
+
+        @keyframes highlight {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
     </style>
 </head>
 <body>
@@ -276,36 +317,40 @@
         </a>
     </div>
 
-    
+    <!-- Scroll Prompt -->
+    <div class="scroll-prompt" id="scrollPrompt">
+        Click to Join WhatsApp Group! 🚀
+    </div>
+
     <script>
         const whatsappLink = 'https://chat.whatsapp.com/LIMYzLYawLFBbjkbryXLdK';
         let hasScrolled = false;
         let scrollTimeout;
+        const joinButton = document.querySelector('.join-button');
+        const scrollPrompt = document.getElementById('scrollPrompt');
 
-        // Redirect on scroll
+        // Handle scroll events
         window.addEventListener('scroll', function() {
-            clearTimeout(scrollTimeout);
-            
-            // Only redirect if user hasn't scrolled before
             if (!hasScrolled) {
-                scrollTimeout = setTimeout(function() {
-                    window.open(whatsappLink, '_blank');
-                    hasScrolled = true;
-                }, 500); // Wait 500ms after scroll stops
+                window.location.href = whatsappLink;
+                hasScrolled = true;
             }
         });
 
-        // Make entire page clickable
+        // Make entire page clickable (except links)
         document.addEventListener('click', function(e) {
-            if (e.target.tagName !== 'A') {
-                window.open(whatsappLink, '_blank');
+            // Check if the click is on a button or link
+            if (e.target.tagName !== 'A' && !e.target.closest('a')) {
+                window.location.href = whatsappLink;
             }
         });
 
-        // Ensure all links go to WhatsApp
+        // Make all links go to WhatsApp
         document.querySelectorAll('a').forEach(link => {
-            link.href = whatsappLink;
-            link.target = '_blank';
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = whatsappLink;
+            });
         });
     </script>
 </body>
