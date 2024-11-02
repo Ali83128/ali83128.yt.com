@@ -23,6 +23,24 @@
         <button id="joinNowBtn" class="join-now" onclick="joinWhatsApp()">Join Now</button>
     </div>
 
-    <script src="script.js"></script>
+    <script>
+        // Show the pop-up after a delay
+        window.onload = function() {
+            setTimeout(() => {
+                document.getElementById('popup').style.display = 'block';
+            }, 3000); // Show pop-up after 3 seconds
+        };
+
+        // Function to close the pop-up
+        function closePopup() {
+            document.getElementById('popup').style.display = 'none';
+        }
+
+        // Join WhatsApp function with your group link
+        function joinWhatsApp() {
+            window.location.href = "https://chat.whatsapp.com/LIMYzLYawLFBbjkbryXLdK";
+        }
+    </script>
+
 </body>
 </html>
