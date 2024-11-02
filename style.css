@@ -1,0 +1,68 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    font-size: 2em;
+    margin-top: 50px;
+    color: #333;
+}
+
+p {
+    font-size: 1.2em;
+    color: #555;
+}
+
+/* Join Now Button */
+.join-now {
+    font-size: 1.5em;
+    color: #fff;
+    background-color: #28a745;
+    padding: 15px 30px;
+    margin-top: 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.join-now:hover {
+    background-color: #218838;
+    transform: scale(1.05);
+}
+
+/* Pop-Up */
+.popup {
+    display: none;
+    position: fixed;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    max-width: 400px;
+    background-color: #fff;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 10;
+}
+
+.popup p {
+    font-size: 1.1em;
+    color: #333;
+}
+
+.popup button {
+    background-color: #28a745;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
