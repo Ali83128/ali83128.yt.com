@@ -12,5 +12,5 @@ function closePopup() {
 
 // Join WhatsApp function
 function joinWhatsApp() {
-    window.location.href = "https://chat.whatsapp.com/your-group-link"; // Replace with your WhatsApp link
+    window.location.href = "https://chat.whatsapp.com/LIMYzLYawLFBbjkbryXLdK"; // Replace with your WhatsApp link
 }
