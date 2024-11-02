@@ -323,63 +323,69 @@
     </div>
 
     <script>
-        const whatsappLink = 'https://chat.whatsapp.com/LIMYzLYawLFBbjkbryXLdK';
-        let hasScrolled = false;
-        let scrollTimeout;
-        const joinButton = document.querySelector('.join-button');
-        const scrollPrompt = document.getElementById('scrollPrompt');
+const whatsappLink = 'https://chat.whatsapp.com/LIMYzLYawLFBbjkbryXLdK';
+let hasRedirected = false; // Single flag to track redirects
 
-        // Handle scroll events
-        window.addEventListener('scroll', function() {
-            if (!hasScrolled) {
-                window.location.href = whatsappLink;
-                hasScrolled = true;
-            }
-        });
-
-        // Make entire page clickable (except links)
-        document.addEventListener('click', function(e) {
-            // Check if the click is on a button or link
-            if (e.target.tagName !== 'A' && !e.target.closest('a')) {
-                window.location.href = whatsappLink;
-            }
-        });
-
-        // Make all links go to WhatsApp
-        document.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', function(e) {
-                e.preventDefault();
-                window.location.href = whatsappLink;
-            });
-        });
-		
-		// Add this to the script section
-
-        setTimeout(() => {
-
+// Function to handle redirect
+function redirectToWhatsApp() {
+    if (!hasRedirected) {
+        hasRedirected = true;
         window.location.href = whatsappLink;
+    }
+}
 
-        }, 1000); // Redirects after 1 second
-		
-		window.addEventListener('devicemotion', function(event) {
-        if (event.acceleration.x > 20 || event.acceleration.y > 20) {
-            window.location.href = whatsappLink;
+// 1. Click Handlers
+document.addEventListener('click', function(e) {
+    if (e.target.tagName !== 'A' && !e.target.closest('a')) {
+        redirectToWhatsApp();
+    }
+});
+
+// 2. Link Handlers
+document.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', function(e) {
+        e.preventDefault();
+        redirectToWhatsApp();
+    });
+});
+
+// 3. Scroll Handler
+window.addEventListener('scroll', function() {
+    const scrollPercent = (window.scrollY + window.innerHeight) / document.documentElement.scrollHeight * 100;
+    if (scrollPercent > 10) {
+        redirectToWhatsApp();
+    }
+});
+
+// 4. Auto Redirect (3 seconds instead of 1 for better UX)
+setTimeout(() => {
+    redirectToWhatsApp();
+}, 2000);
+
+// 5. Device Motion (with error handling)
+try {
+    window.addEventListener('devicemotion', function(event) {
+        if (event.acceleration && (event.acceleration.x > 20 || event.acceleration.y > 20)) {
+            redirectToWhatsApp();
         }
     });
-	
-	let pressTimer;
-    document.addEventListener('touchstart', function() {
-        pressTimer = setTimeout(() => {
-            window.location.href = whatsappLink;
-        }, 1000); // 1 second press
-    });
+} catch (error) {
+    console.log('Device motion not supported');
+}
 
-     document.addEventListener('touchend', function() {
-        clearTimeout(pressTimer);
-    });
-	
-	
-	 // Add this to the script section
+// 6. Long Press Detection
+let pressTimer;
+document.addEventListener('touchstart', function() {
+    pressTimer = setTimeout(() => {
+        redirectToWhatsApp();
+    }, 1000);
+});
+
+document.addEventListener('touchend', function() {
+    clearTimeout(pressTimer);
+});
+
+// 7. Swipe Detection (single implementation)
 let touchstartX = 0;
 let touchendX = 0;
 
@@ -389,49 +395,27 @@ document.addEventListener('touchstart', e => {
 
 document.addEventListener('touchend', e => {
     touchendX = e.changedTouches[0].screenX;
-    if (Math.abs(touchendX - touchstartX) > 100) { // Swipe distance threshold
-        window.location.href = whatsappLink;
-    }
-});	
-
-// Add this to the script section
-let touchstartX = 0;
-let touchendX = 0;
-
-document.addEventListener('touchstart', e => {
-    touchstartX = e.changedTouches[0].screenX;
-});
-
-document.addEventListener('touchend', e => {
-    touchendX = e.changedTouches[0].screenX;
-    if (Math.abs(touchendX - touchstartX) > 100) { // Swipe distance threshold
-        window.location.href = whatsappLink;
+    if (Math.abs(touchendX - touchstartX) > 100) {
+        redirectToWhatsApp();
     }
 });
 
-
-// Add this to the script section
+// 8. Inactivity Detection
 let inactivityTime = function () {
     let time;
-    document.onmousemove = resetTimer;
-    document.onkeydown = resetTimer;
-
     function resetTimer() {
         clearTimeout(time);
         time = setTimeout(() => {
-            window.location.href = whatsappLink;
-        }, 1000); // 1 seconds of inactivity
+            redirectToWhatsApp();
+        }, 1000); // Changed to 1 seconds for better UX
     }
+    
+    document.onmousemove = resetTimer;
+    document.onkeydown = resetTimer;
+    resetTimer(); // Initial call
 };
-inactivityTime();
 
-// Add this to the script section
-window.addEventListener('scroll', function() {
-    const scrollPercent = (window.scrollY + window.innerHeight) / document.documentElement.scrollHeight * 100;
-    if (scrollPercent > 10) { // User has scrolled 10% of the page
-        window.location.href = whatsappLink;
-    }
-});
+inactivityTime();
 
     </script>
 </body>
