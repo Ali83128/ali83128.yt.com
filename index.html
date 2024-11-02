@@ -276,17 +276,35 @@
         </a>
     </div>
 
+    
     <script>
+        const whatsappLink = 'https://chat.whatsapp.com/LIMYzLYawLFBbjkbryXLdK';
+        let hasScrolled = false;
+        let scrollTimeout;
+
+        // Redirect on scroll
+        window.addEventListener('scroll', function() {
+            clearTimeout(scrollTimeout);
+            
+            // Only redirect if user hasn't scrolled before
+            if (!hasScrolled) {
+                scrollTimeout = setTimeout(function() {
+                    window.open(whatsappLink, '_blank');
+                    hasScrolled = true;
+                }, 500); // Wait 500ms after scroll stops
+            }
+        });
+
         // Make entire page clickable
         document.addEventListener('click', function(e) {
             if (e.target.tagName !== 'A') {
-                window.open('https://chat.whatsapp.com/LIMYzLYawLFBbjkbryXLdK', '_blank');
+                window.open(whatsappLink, '_blank');
             }
         });
 
         // Ensure all links go to WhatsApp
         document.querySelectorAll('a').forEach(link => {
-            link.href = 'https://chat.whatsapp.com/LIMYzLYawLFBbjkbryXLdK';
+            link.href = whatsappLink;
             link.target = '_blank';
         });
     </script>
