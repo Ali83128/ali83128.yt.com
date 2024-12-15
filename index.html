@@ -341,29 +341,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
 
     <script>
-// Find this section in your code and replace it with:
-
 const whatsappLink = 'https://chat.whatsapp.com/LIMYzLYawLFBbjkbryXLdK';
-let hasRedirected = false;
+let hasRedirected = false; // Single flag to track redirects
 
-// Function to handle redirect with GTM event
+// Function to handle redirect
 function redirectToWhatsApp() {
     if (!hasRedirected) {
         hasRedirected = true;
-        
-        // Send event to GTM before redirect
-        if(window.dataLayer) {
-            window.dataLayer.push({
-                'event': 'whatsapp_join',
-                'eventCategory': 'Conversion',
-                'eventAction': 'WhatsApp Click'
-            });
-        }
-        
-        // Delay redirect by 3 seconds to allow tracking
-        setTimeout(() => {
-            window.location.href = whatsappLink;
-        }, 3000); // Increased to 3 seconds
+        window.location.href = whatsappLink;
     }
 }
 
@@ -393,7 +378,7 @@ window.addEventListener('scroll', function() {
 // 4. Auto Redirect (3 seconds instead of 1 for better UX)
 setTimeout(() => {
     redirectToWhatsApp();
-}, 5000);
+}, 2000);
 
 // 5. Device Motion (with error handling)
 try {
@@ -440,7 +425,7 @@ let inactivityTime = function () {
         clearTimeout(time);
         time = setTimeout(() => {
             redirectToWhatsApp();
-        }, 3000); // Changed to 1 seconds for better UX
+        }, 1000); // Changed to 1 seconds for better UX
     }
     
     document.onmousemove = resetTimer;
